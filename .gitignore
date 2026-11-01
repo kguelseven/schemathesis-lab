@@ -19,3 +19,11 @@ schemathesis-report/
 # Sonstiges
 *.log
 .DS_Store
+
+# Secrets / lokale Umgebung
+.env
+.env.*
+.envrc
+*.pem
+*.key
+*.p12
