@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites errors="0" failures="0" skipped="0" tests="6" time="6.199529">
+  <testsuite name="schemathesis" errors="0" failures="0" skipped="0" tests="6" time="6.199529">
+    <testcase name="POST /books" time="1.392501" />
+    <testcase name="GET /books" time="0.850162" />
+    <testcase name="PUT /books/{id}" time="1.763594" />
+    <testcase name="GET /books/{id}" time="0.298846" />
+    <testcase name="DELETE /books/{id}" time="0.065383" />
+    <testcase name="Stateful tests" time="1.829044" />
+  </testsuite>
+</testsuites>

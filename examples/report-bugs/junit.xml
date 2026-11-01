@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites errors="0" failures="5" skipped="0" tests="6" time="2.870030">
+  <testsuite name="schemathesis" errors="0" failures="5" skipped="0" tests="6" time="2.870030">
+    <testcase name="POST /books" time="0.815011">
+      <failure type="failure" message="ST108">1. Test Case ID: Y9TMWy
+
+- ST108 Response violates schema
+
+    "978-3-16-148410-0" does not match "^[0-9]{13}$"
+
+    Validated against the response schema for status code 201.
+
+    Schema at /properties/isbn:
+
+        {
+            "pattern": "^[0-9]{13}$",
+            "type": "string"
+        }
+
+    Value:
+
+        "978-3-16-148410-0"
+
+[201] Created:
+
+    `{"id":1,"title":"Der Process","author":"Franz Kafka","authorShort":"F. Kafka","isbn":"978-3-16-148410-0","year":1925,"price":12.9}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"title": "Der Process", "author": "Franz Kafka", "isbn": "9783161484100", "year": 1925, "price": 12.9}' http://localhost:8080/books</failure>
+      <failure type="failure" message="ST103">1. Test Case ID: mT1mex
+
+- ST103 Undocumented status code
+
+    Received: 409
+    Documented: 201, 400, 415
+
+[409] Conflict:
+
+    `{"detail":"ISBN existiert bereits","instance":"/books","status":409,"title":"Conflict"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"title": "Der Process", "author": "Franz Kafka", "isbn": "9783161484100", "year": 1449, "price": 12.9}' http://localhost:8080/books</failure>
+    </testcase>
+    <testcase name="GET /books" time="0.071773">
+      <failure type="failure" message="ST108">1. Test Case ID: vpANjE
+
+- ST108 Response violates schema
+
+    "978-3-16-148410-0" does not match "^[0-9]{13}$"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /components/schemas/Book/properties/isbn:
+
+        {
+            "pattern": "^[0-9]{13}$",
+            "type": "string"
+        }
+
+    Value:
+
+        "978-3-16-148410-0"
+
+[200] OK:
+
+    `[{"id":1,"title":"Der Process","author":"Franz Kafka","authorShort":"F. Kafka","isbn":"978-3-16-148410-0","year":1925,"price":12.9}]`
+
+Reproduce with:
+
+    curl -X GET 'http://localhost:8080/books?limit='</failure>
+    </testcase>
+    <testcase name="PUT /books/{id}" time="0.097909">
+      <failure type="failure" message="ST108">1. Test Case ID: zCuhYT
+
+- ST108 Response violates schema
+
+    "978-3-16-148410-0" does not match "^[0-9]{13}$"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/isbn:
+
+        {
+            "pattern": "^[0-9]{13}$",
+            "type": "string"
+        }
+
+    Value:
+
+        "978-3-16-148410-0"
+
+[200] OK:
+
+    `{"id":1,"title":"Der Process","author":"Franz Kafka","authorShort":"F. Kafka","isbn":"978-3-16-148410-0","year":1925,"price":12.9}`
+
+Reproduce with:
+
+    curl -X PUT -H 'Content-Type: application/json' -d '{"title": "Der Process", "author": "Franz Kafka", "isbn": "9783161484100", "year": 1925, "price": 12.9}' http://localhost:8080/books/1</failure>
+      <failure type="failure" message="ST201">1. Test Case ID: TGcKdd
+
+- ST201 Schema-violating request accepted
+
+    Invalid data should have been rejected
+    Expected: 400, 401, 403, 404, 405, 406, 409, 415, 422, 428, 429, 5xx
+    Invalid component: in body - year: Value smaller than minimum
+
+[200] OK:
+
+    `{"id":1,"title":"Der Process","author":"Franz Kafka","authorShort":"F. Kafka","isbn":"978-3-16-148410-0","year":1449,"price":12.9}`
+
+Reproduce with:
+
+    curl -X PUT -H 'Content-Type: application/json' -d '{"title": "Der Process", "author": "Franz Kafka", "isbn": "9783161484100", "year": 1449, "price": 12.9}' http://localhost:8080/books/1</failure>
+    </testcase>
+    <testcase name="GET /books/{id}" time="0.026749">
+      <failure type="failure" message="ST108">1. Test Case ID: CicXV0
+
+- ST108 Response violates schema
+
+    "978-3-16-148410-0" does not match "^[0-9]{13}$"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/isbn:
+
+        {
+            "pattern": "^[0-9]{13}$",
+            "type": "string"
+        }
+
+    Value:
+
+        "978-3-16-148410-0"
+
+[200] OK:
+
+    `{"id":1,"title":"Der Process","author":"Franz Kafka","authorShort":"F. Kafka","isbn":"978-3-16-148410-0","year":1449,"price":12.9}`
+
+Reproduce with:
+
+    curl -X GET http://localhost:8080/books/1</failure>
+    </testcase>
+    <testcase name="DELETE /books/{id}" time="0.047156" />
+    <testcase name="Stateful tests" time="1.811432">
+      <failure type="failure" message="ST302">1. Test Case ID: 1NwfLU
+
+- ST302 Created resource not found
+
+    The API returned `404 Not Found` for a resource that was just created.
+
+    Created with      : `POST /books`
+    Not available with: `GET /books/{id}`
+
+[404] Not Found:
+
+    `{"detail":"Buch 4 nicht gefunden","instance":"/books/4","status":404,"title":"Not Found"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"\u00cc\u0014\ud822\udefa": [false, 7518, -2.1610464217846536e+16], "": [{"\ud90d\udc680!": "XS", "\u0006\u00d8": 4.008432382239525e-303, "\ud98e\uddb8\ud999\ude19\ud83a\udf4b\u00a9\u00f8\udb8a\udd1e\u00d0\udb35\udc2bK(#\udb59\udc0a\udb75\uded9\u00e2(7": "\u00cd"}, []], "\u00f9M\u00a0\n_\ud9a3\udfca~\ud86a\udc9b\u00a1": [[{"": null, "\u009a4%": null, "\u00af\u0087J\u008d\u0018\u00e24\u000e\u000f\udaad\udc39": "&amp;\u00d0"}]], "\udb0e\ude84\u00aa\u007f#\udb86\udce4\u00ebt\u00cc\u008e\u00a9": {"\udb3c\udcf2\u00df\u00c5": 9188}, "\u00a9\u001b\u009e\u0097\udaca\udef5\u009a\u009b\u00a4m\u0004\u00abxe\udb8f\udd51\u00e9c\u00cc2": {}, "isbn": "8951036554123", "price": 5.090634251369876e-217, "title": "\u00a6", "author": "Franz Kafka", "year": 2056}' http://localhost:8080/books
+    curl -X GET http://localhost:8080/books/4</failure>
+      <failure type="failure" message="ST301">1. Test Case ID: LjmvKq
+
+- ST301 Deleted resource still available
+
+    The API did not return a `HTTP 404 Not Found` response (got `HTTP 200 OK`) for a resource that was previously deleted.
+
+    The resource was deleted with `DELETE /books/2`
+
+[200] OK:
+
+    `{"id":2,"title":"Der Process","author":"Franz Kafka","authorShort":"F. Kafka","isbn":"297-6-46-209659-6","year":1718,"price":0.0}`
+
+Reproduce with:
+
+    curl -X GET http://localhost:8080/books
+    curl -X DELETE http://localhost:8080/books/2
+    curl -X GET http://localhost:8080/books/2</failure>
+      <failure type="failure" message="ST101, ST103">1. Test Case ID: zG62Vs
+
+- ST101 Server error
+
+- ST103 Undocumented status code
+
+    Received: 500
+    Documented: 201, 400, 415
+
+[500] Internal Server Error:
+
+    `{"timestamp":"2026-11-01T16:44:41.259Z","status":500,"error":"Internal Server Error","path":"/books"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"\u009e\u00b3\u009b\u0087V0\u00f2": {"\udb1f\udd82\u008b,pU\u00e2\ud926\udf09\u00d4\u0000\u00c3": -156545, "G\u0093\u00b3\u0019\u00b3": [783]}, "title": "\ud93c\udf56\uda34\ude41\ud980\udd1e\u00dc", "year": 1449, "price": 1.5, "author": "\u00ec\uf117\u00b3^", "isbn": "3687341216095"}' http://localhost:8080/books</failure>
+      <failure type="failure" message="ST101, ST103">1. Test Case ID: 7IMSSf
+
+- ST101 Server error
+
+- ST103 Undocumented status code
+
+    Received: 500
+    Documented: 200, 404, 400, 415
+
+[500] Internal Server Error:
+
+    `{"timestamp":"2026-11-01T16:44:41.513Z","status":500,"error":"Internal Server Error","path":"/books/21"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"\u00b6\u00e3\u00f3": {"\u00ca@V\u00d2\udb96\udd33\ud8d1\udfcb\bA\u00e6m\udba7\udcf3\u0019\ud881\ude8b\u0091\u0098": ["\u00d6\u00ca4E\u000e", true], "NULL": -2.518191513024593e-178}, "": -6.9751606026356e+16, "\u00be\u0081": {"\u000f": [], "$L\ud8a7\udc3b\ud835\ude7a\ud94a\udee1": true}, "\u009d?\udb67\udd5c": [2.791963029944612e+201], "\u00d2\ud93b\udcd4": [true, null, [""]], "author": "Franz Kafka", "price": 1.3718319394238933e-248, "isbn": "0439080990834", "title": "Der Process", "year": 2066.0}' http://localhost:8080/books
+    curl -X PUT -H 'Content-Type: application/json' -d '{"": {}, "\u00bd\u00e8\u001a^\u00814_G": [], "\u00a7": {}, "\u00a5~\u00f0\u00bd\u00ae\udb8d\udfba\ud851\ude0e": {}, "\u0012\u00fc": {"\u00d9\u0002\u00bf\u00c6": {"]9": false}, "": {"\u00cc": -2.225073858507e-311}, "\u00ef\ud915\udd9b\ud9e4\udf93`\ud87b\udfeb": {}}, "author": "Z\u00a8J\u00a5\u00ff\u00c3(\u00f5", "year": 1467, "title": "\u008a\u00fb\u0087\u00f7\u00e6\u00f2\u00dbQ \tk|\ud94f\udfe2ii#=\u00e8\u00d3\u00a7\u00dd\ud90b\ude0d\u00b0\ud991\udf2b\uda81\uddd7\u00ce", "price": 2.5453988408038867e-308, "isbn": "9611995107721"}' http://localhost:8080/books/21</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

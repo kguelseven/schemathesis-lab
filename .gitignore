@@ -1,0 +1,21 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Schemathesis / Hypothesis
+.hypothesis/
+.schemathesis/
+schemathesis-report/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+
+# Sonstiges
+*.log
+.DS_Store
